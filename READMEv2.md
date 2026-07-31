@@ -60,47 +60,35 @@ We need create other type of table for parititoning:
 We need to add a generated column for partitioning:
 
 ```sql
+
+-- Add index for more fast rewrite table
+
+CREATE INDEX idx_data_main_create_ts ON r_data_main(create_ts);
+
 -- Add a generated column for partition key
-ALTER TABLE r_data_main ADD COLUMN create_ts_timestamp TIMESTAMP;
-
-DO $$ 
-DECLARE 
-    rows_count INTEGER;
-BEGIN 
-        
-        -- Fill the values on the column
-
-        BEGIN;
-            WITH rows_to_update AS (
-                    SELECT data_id, coll_id, create_ts
-                    FROM r_data_main
-                    WHERE create_ts_timestamp IS NULL 
-                    ORDER BY created_at ASC
-                    LIMIT 10000;
-                )
-                UPDATE r_data_main 
-                    SET create_ts_timestamp = convert_epoch_to_timestamp(create_ts) 
-                    WHERE 
-                UPDATE employees
-                SET status = 'Processing'
-                FROM rows_to_update
-                WHERE employees.id = rows_to_update.id;
-        COMMIT;
-
-END $$;
+ALTER TABLE r_data_main
+    ADD COLUMN create_ts_timestamp timestamp
+    GENERATED ALWAYS AS (
+        convert_epoch_to_timestamp(create_ts)
+    ) STORED;
 
 -- Create index on the new column
 CREATE INDEX idx_data_main_create_ts_timestamp ON r_data_main(create_ts_timestamp);
+```
 
-ALTER TABLE r_data_main 
-ALTER COLUMN create_ts_timestamp ADD GENERATED ALWAYS AS convert_epoch_to_timestamp(create_ts) STORED;
+Create new table for partitioning: 
 
+```sql
+-- Step 1: Create the parent table mirroring the old table structure
+CREATE TABLE r_data_main_part (
+    LIKE r_data_main INCLUDING ALL
+) 
+PARTITION BY RANGE (create_ts_timestamp); -- Choose your partition key column
 ```
 
 ### 5. Partition Creation Functions
 
 ### 5.1 Function to Create Quarterly Partitions
-
 
 ```sql
 CREATE OR REPLACE FUNCTION create_quarterly_partition(
@@ -111,7 +99,7 @@ DECLARE
     partition_name TEXT;
     start_date DATE;
     end_date DATE;
-    parent_table TEXT := 'r_data_main';
+    parent_table TEXT := 'r_data_main_part';
     partition_sql TEXT;
 BEGIN
     -- Calculate quarter ranges
