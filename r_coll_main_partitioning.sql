@@ -184,10 +184,39 @@ CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q4 ON public.r_co
 INSERT INTO public.r_coll_main_part SELECT * FROM public.r_coll_main;
 
 
--- Test:
 
+\o explain_analyze_r_coll_main_part.sql
+\timing
+
+-- Test:
 BEGIN;
 
 EXPLAIN ANALYZE VERBOSE 
+UPDATE
+    R_COLL_MAIN
+SET
+    coll_name = substr(
+        coll_name,
+        1,
+        char_length('/banqZone/home/archivematica/biblioDIP')
+    ) || '/ap-f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP' || substr(
+        coll_name,
+        char_length(
+            '/banqZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP'
+        ) + 1
+    )
+WHERE
+    substr(
+        parent_coll_name,
+        1,
+        char_length(
+            '/banqZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP/'
+        )
+    ) = '/banqZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP/'
+    OR parent_coll_name = '/banqZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP';
+
+ROLLBACK;
+
+
 
 
