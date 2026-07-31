@@ -161,7 +161,22 @@ CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2021_Q4 ON public.r_co
 CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q1 ON public.r_coll_main_part (create_ts);
 CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q2 ON public.r_coll_main_part (create_ts);
 CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q3 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q4 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q1 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q2 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q3 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q4 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q1 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q2 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q3 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q4 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q1 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q2 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q3 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q4 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q1 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q2 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q3 ON public.r_coll_main_part (create_ts);
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q4 ON public.r_coll_main_part (create_ts);
 
 
 
