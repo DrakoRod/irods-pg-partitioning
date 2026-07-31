@@ -36,7 +36,7 @@ ALTER TABLE public.r_data_main OWNER TO irods;
 -- r_data_main_part
 ----------------------------
 
-CREATE TABLE public.r_data_main (
+CREATE TABLE public.r_data_main_part (
     data_id bigint NOT NULL,
     coll_id bigint NOT NULL,
     data_name character varying(1000) NOT NULL,
