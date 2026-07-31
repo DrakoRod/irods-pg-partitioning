@@ -42,7 +42,7 @@ CREATE TABLE public.r_coll_main_part (
     create_ts character varying(32),
     modify_ts character varying(32)
 )
-ARTITION BY RANGE (
+PARTITION BY RANGE (
     (
         CASE
             WHEN create_ts IS NULL
