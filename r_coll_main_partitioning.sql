@@ -72,112 +72,67 @@ CREATE TABLE public.r_coll_main_part_default
     PARTITION OF public.r_coll_main_part
     DEFAULT;
 
--- Function to create quarterly partitions
-CREATE OR REPLACE FUNCTION create_quarterly_partition(
-    parent_table TEXT,
-    p_year INTEGER,
-    p_quarter INTEGER
-) RETURNS VOID AS $$
-DECLARE
-    partition_name TEXT;
-    start_date DATE;
-    end_date DATE;
-    --parent_table TEXT := 'r_coll_main_part';
-    partition_sql TEXT;
-BEGIN
-    -- Calculate quarter ranges
-    CASE p_quarter
-        WHEN 1 THEN
-            start_date := MAKE_DATE(p_year, 1, 1);
-            end_date := MAKE_DATE(p_year, 4, 1);
-        WHEN 2 THEN
-            start_date := MAKE_DATE(p_year, 4, 1);
-            end_date := MAKE_DATE(p_year, 7, 1);
-        WHEN 3 THEN
-            start_date := MAKE_DATE(p_year, 7, 1);
-            end_date := MAKE_DATE(p_year, 10, 1);
-        WHEN 4 THEN
-            start_date := MAKE_DATE(p_year, 10, 1);
-            end_date := MAKE_DATE(p_year + 1, 1, 1);
-        ELSE
-            RAISE EXCEPTION 'Invalid quarter: %, must be 1-4', p_quarter;
-    END CASE;
+-- Create function
 
-    partition_name := format('r_coll_main_part_%s_Q%s', p_year, p_quarter);
-    
-    -- Create partition
-    partition_sql := format(
-        'CREATE TABLE IF NOT EXISTS %I PARTITION OF %I 
-         FOR VALUES FROM (%L) TO (%L)',
-        partition_name, parent_table, start_date, end_date
-    );
-    
-    EXECUTE partition_sql;
-    
-    RAISE NOTICE 'Created partition % for range % to %', 
-        partition_name, start_date, end_date;
-END;
-$$ LANGUAGE plpgsql;
+SELECT create_quarterly_partition('r_coll_main_part', 2020, 1, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2020, 2, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2020, 3, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2020, 4, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2021, 1, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2021, 2, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2021, 3, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2021, 4, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2022, 1, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2022, 2, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2022, 3, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2022, 4, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2023, 1, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2023, 2, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2023, 3, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2023, 4, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2024, 1, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2024, 2, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2024, 3, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2024, 4, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2025, 1, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2025, 2, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2025, 3, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2025, 4, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2026, 1, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2026, 2, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2026, 3, 'irods');
+SELECT create_quarterly_partition('r_coll_main_part', 2026, 4, 'irods');
 
 
-SELECT create_quarterly_partition('r_coll_main_part', 2020, 1);
-SELECT create_quarterly_partition('r_coll_main_part', 2020, 2);
-SELECT create_quarterly_partition('r_coll_main_part', 2020, 3);
-SELECT create_quarterly_partition('r_coll_main_part', 2020, 4);
-SELECT create_quarterly_partition('r_coll_main_part', 2021, 1);
-SELECT create_quarterly_partition('r_coll_main_part', 2021, 2);
-SELECT create_quarterly_partition('r_coll_main_part', 2021, 3);
-SELECT create_quarterly_partition('r_coll_main_part', 2021, 4);
-SELECT create_quarterly_partition('r_coll_main_part', 2022, 1);
-SELECT create_quarterly_partition('r_coll_main_part', 2022, 2);
-SELECT create_quarterly_partition('r_coll_main_part', 2022, 3);
-SELECT create_quarterly_partition('r_coll_main_part', 2022, 4);
-SELECT create_quarterly_partition('r_coll_main_part', 2023, 1);
-SELECT create_quarterly_partition('r_coll_main_part', 2023, 2);
-SELECT create_quarterly_partition('r_coll_main_part', 2023, 3);
-SELECT create_quarterly_partition('r_coll_main_part', 2023, 4);
-SELECT create_quarterly_partition('r_coll_main_part', 2024, 1);
-SELECT create_quarterly_partition('r_coll_main_part', 2024, 2);
-SELECT create_quarterly_partition('r_coll_main_part', 2024, 3);
-SELECT create_quarterly_partition('r_coll_main_part', 2024, 4);
-SELECT create_quarterly_partition('r_coll_main_part', 2025, 1);
-SELECT create_quarterly_partition('r_coll_main_part', 2025, 2);
-SELECT create_quarterly_partition('r_coll_main_part', 2025, 3);
-SELECT create_quarterly_partition('r_coll_main_part', 2025, 4);
-SELECT create_quarterly_partition('r_coll_main_part', 2026, 1);
-SELECT create_quarterly_partition('r_coll_main_part', 2026, 2);
-SELECT create_quarterly_partition('r_coll_main_part', 2026, 3);
-SELECT create_quarterly_partition('r_coll_main_part', 2026, 4);
+--- Indexes for fast access
 
-
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2020_Q1 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2020_Q2 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2020_Q3 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2020_Q4 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2021_Q1 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2021_Q2 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2021_Q3 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2021_Q4 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q1 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q2 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q3 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q1 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q2 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q3 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q4 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q1 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q2 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q3 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q4 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q1 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q2 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q3 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q4 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q1 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q2 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q3 ON public.r_coll_main_part (create_ts);
-CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q4 ON public.r_coll_main_part (create_ts);
-
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2020_Q1 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2020_Q2 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2020_Q3 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2020_Q4 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2021_Q1 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2021_Q2 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2021_Q3 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2021_Q4 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q1 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q2 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2022_Q3 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q1 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q2 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q3 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2023_Q4 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q1 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q2 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q3 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2024_Q4 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q1 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q2 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q3 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2025_Q4 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q1 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q2 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q3 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
+CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q4 ON public.r_coll_main_part (to_timestamp(create_ts::bigint));
 
 
 -- Resinsert data from r_coll_main to r_coll_main_part
@@ -216,7 +171,5 @@ WHERE
     OR parent_coll_name = '/banqZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP';
 
 ROLLBACK;
-
-
 
 
