@@ -141,8 +141,14 @@ CREATE INDEX IF NOT EXISTS idx_r_coll_main_part_create_ts_2026_Q4 ON public.r_co
 INSERT INTO public.r_coll_main_part SELECT * FROM public.r_coll_main;
 
 
+-- Final migration:
+-- We use the old version to backup
+ALTER TABLE public.r_coll_main RENAME TO public.r_coll_main_backup;
+-- Now we change the final name
+ALTER TABLE public.r_coll_main_part RENAME TO public.r_coll_main;
 
-\o explain_analyze_r_coll_main_part.sql
+-- if we want export the explain to other
+-- \o explain_analyze_r_coll_main_part.sql
 \timing
 
 -- Test:

@@ -158,7 +158,12 @@ CREATE INDEX IF NOT EXISTS idx_r_data_main_part_create_ts_2026_Q4 ON public.r_da
 INSERT INTO public.r_data_main_part SELECT * FROM public.r_data_main;
 
 
-\o explain_analyze_r_data_main_part.sql
+-- Final migration:
+-- We use the old version to backup
+ALTER TABLE public.r_data_main RENAME TO public.r_data_main_backup;
+-- Now we change the final name
+ALTER TABLE public.r_data_main_part RENAME TO public.r_data_main;
+
 \timing
 
 -- Test:
