@@ -45,7 +45,7 @@ BEGIN
     EXECUTE partition_sql;    
 
     sql_owner := format(
-        'ALTER TABLE %I OWNER TO %I;', partition_name, parent_table
+        'ALTER TABLE %I OWNER TO %I;', partition_name, user_owner
     );
 
     EXECUTE sql_owner;
