@@ -92,6 +92,8 @@ CREATE TABLE public.r_data_main_part_default
     PARTITION OF public.r_data_main_part
     DEFAULT;
 
+ALTER TABLE public.r_data_main_part_default OWNER TO irods;
+
 SELECT create_quarterly_partition('r_data_main_part', 2020, 1, 'irods');
 SELECT create_quarterly_partition('r_data_main_part', 2020, 2, 'irods');
 SELECT create_quarterly_partition('r_data_main_part', 2020, 3, 'irods');
@@ -120,7 +122,6 @@ SELECT create_quarterly_partition('r_data_main_part', 2026, 1, 'irods');
 SELECT create_quarterly_partition('r_data_main_part', 2026, 2, 'irods');
 SELECT create_quarterly_partition('r_data_main_part', 2026, 3, 'irods');
 SELECT create_quarterly_partition('r_data_main_part', 2026, 4, 'irods');
-
 
 
 -- Review indexes if with this format is enought.
@@ -155,7 +156,6 @@ CREATE INDEX IF NOT EXISTS idx_r_data_main_part_create_ts_2026_Q4 ON public.r_da
 
 -- Resinsert data from r_coll_main to r_data_main_part
 INSERT INTO public.r_data_main_part SELECT * FROM public.r_data_main;
-
 
 
 \o explain_analyze_r_data_main_part.sql

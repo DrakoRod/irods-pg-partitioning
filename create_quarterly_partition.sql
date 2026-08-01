@@ -33,7 +33,7 @@ BEGIN
             RAISE EXCEPTION 'Invalid quarter: %, must be 1-4', p_quarter;
     END CASE;
 
-    partition_name := format('r_data_main_part_%s', p_year, p_quarter);
+    partition_name := format('%s_part_%s_q%s', parent_table, p_year, p_quarter);
     
     -- Create partition
     partition_sql := format(

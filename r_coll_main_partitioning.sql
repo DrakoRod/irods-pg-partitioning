@@ -72,6 +72,8 @@ CREATE TABLE public.r_coll_main_part_default
     PARTITION OF public.r_coll_main_part
     DEFAULT;
 
+ALTER TABLE public.r_coll_main_part_default OWNER TO irods;
+
 -- Create function
 
 SELECT create_quarterly_partition('r_coll_main_part', 2020, 1, 'irods');
