@@ -156,16 +156,16 @@ BEGIN;
 
 EXPLAIN ANALYZE VERBOSE 
 UPDATE
-    R_COLL_MAIN
+    R_COLL_MAIN_PART
 SET
     coll_name = substr(
         coll_name,
         1,
-        char_length('/banqZone/home/archivematica/biblioDIP')
+        char_length('/tempZone/home/archivematica/biblioDIP')
     ) || '/ap-f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP' || substr(
         coll_name,
         char_length(
-            '/banqZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP'
+            '/tmpZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP'
         ) + 1
     )
 WHERE
@@ -173,10 +173,10 @@ WHERE
         parent_coll_name,
         1,
         char_length(
-            '/banqZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP/'
+            '/tmpZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP/'
         )
-    ) = '/banqZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP/'
-    OR parent_coll_name = '/banqZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP';
+    ) = '/tmpZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP/'
+    OR parent_coll_name = '/tmpZone/home/archivematica/biblioDIP/f2c1bcbd-5933-4e75-9ef8-1adb1449b755_DIP';
 
 ROLLBACK;
 
